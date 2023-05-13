@@ -53,7 +53,7 @@ public record ApiError(
         errorName = errorName.substring(errorName.lastIndexOf('.') + 1);
 
         return ApiError.builder()
-                .code(errorCode.getName())
+                .code(errorCode.name())
                 .status(errorCode.defaultHttpStatus().value())
                 .name(errorName)
                 .message(errorCode.defaultMessage())
@@ -64,7 +64,7 @@ public record ApiError(
         List<ApiSubError> subErrors = List.of(subError);
 
         return ApiError.builder()
-                .code(errorCode.getName())
+                .code(errorCode.name())
                 .status(errorCode.defaultHttpStatus().value())
                 .name(errorCode.defaultException().getClass().getName())
                 .message(errorCode.defaultMessage())

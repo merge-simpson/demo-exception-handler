@@ -13,7 +13,7 @@ public class CustomException extends RuntimeException {
     private static class DefaultErrorCodeHolder {
         private static final ErrorCode DEFAULT_ERROR_CODE = new ErrorCode() {
             @Override
-            public String getName() {
+            public String name() {
                 return "SERVER_ERROR";
             }
 

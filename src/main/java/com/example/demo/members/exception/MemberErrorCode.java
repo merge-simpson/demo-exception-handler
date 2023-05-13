@@ -16,11 +16,6 @@ public enum MemberErrorCode implements ErrorCode {
     private final HttpStatus STATUS;
 
     @Override
-    public String getName() {
-        return name();
-    }
-
-    @Override
     public HttpStatus defaultHttpStatus() {
         return STATUS;
     }
