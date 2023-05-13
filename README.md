@@ -7,6 +7,8 @@ English |
 - Syntax Level: Java 17(JDK 17) ⏤ `required`
 - Spring Boot 3
 - Docker Compose ⏤ `required`
+- Flyway: To construct your local db schema, when booting server application.
+- MapStruct: To convert dto, jpa entity, domain models.
 
 # Implementation Overview
 

@@ -51,3 +51,19 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// Enable Java Preview (1)
+compileJava {
+    options.compilerArgs += ['--enable-preview', '-Amapstruct.defaultComponentModel=spring']
+}
+
+// Enable Java Preview (2)
+compileTestJava {
+    options.compilerArgs += ['--enable-preview', '-Amapstruct.defaultComponentModel=spring']
+}
+
+// Enable Java Preview (3)
+test {
+    useJUnitPlatform()
+    jvmArgs(['--enable-preview', '-Amapstruct.defaultComponentModel=spring'])
+}

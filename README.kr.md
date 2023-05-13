@@ -2,20 +2,20 @@
 [**English**](https://github.com/merge-simpson/demo-exception-handler/blob/main/README.md) |
 한국어
 
----
-
 # 스펙
 
 - 신택스 수준: 자바 17 ⏤ `설치 필요`
 - 스프링 부트 3
 - 도커 컴포즈 ⏤ `설치 필요`
+- Flyway: 로컬 DB에 스키마 구성. 서버 애플리케이션 부트 때 테이블 자동 생성.
+- MapStruct: DTO, JPA Entity, 도메인 모델 등을 서로 변환.
 
 # 구현
 
-- `Custom Exception`은 우리가 핸들링 할 대부분의 예외의 부모 타입으로 사용됩니다. 이로써 일반화가 쉬워집니다.
-- `Error Code`는 상위 인터페이스로, 우리가 사용할 열거형(enum) 커스텀 에러 코드들을 확장할 때 사용합니다.
-- `Global Exception Handler`를 통해 정형적인 에러 양식을 제공하도록 일반화합니다.
-- 이렇게만 해 두면 더 이상 `Global Exception Handler`에 새 메서드를 추가하지 않아도 됩니다. 기본 양식을 사용하려고 한다면요.
+- **`Custom Exception`**은 우리가 핸들링 할 대부분의 예외의 부모 타입으로 사용됩니다. 이로써 일반화가 쉬워집니다.
+- **`Error Code`**는 상위 인터페이스로, 우리가 사용할 열거형(enum) 커스텀 에러 코드들을 확장할 때 사용합니다.
+- **`Global Exception Handler`**를 통해 정형적인 에러 양식을 제공하도록 일반화합니다.
+- 이렇게만 해 두면 더 이상 **`Global Exception Handler`**에 새 메서드를 추가하지 않아도 됩니다. 기본 양식을 사용하려고 한다면요.
 - 이제 새로운 예외 응답을 추가하려면, 열거형 에러 코드에 새로운 상태를 추가하기만 하면 됩니다.
 
 그것만 하면 관리가 완료됩니다.
