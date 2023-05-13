@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Builder
 public record ApiError(
         String code,
@@ -48,10 +49,13 @@ public record ApiError(
     }
 
     public static ApiError of(ErrorCode errorCode) {
+        String errorName = errorCode.defaultException().getClass().getName();
+        errorName = errorName.substring(errorName.lastIndexOf('.') + 1);
+
         return ApiError.builder()
                 .code(errorCode.getName())
                 .status(errorCode.defaultHttpStatus().value())
-                .name(errorCode.defaultException().getClass().getName())
+                .name(errorName)
                 .message(errorCode.defaultMessage())
                 .build();
     }
