@@ -19,10 +19,10 @@ English |
 | (C) Global Exception Handler | Unhandled custom exception will come here. Then your controller will response the api error format about the situation.                                             |
 
 - `Global Exception Handler` doesn't need more method, initially.
-    - Base format of exception response will be used.
+    - Base format of exceptional response will be used.
     - `CustomException` has an `ErrorCode`. Default constructor will use DEFAULT_ERROR_CODE.
     - API Error format will be completed with `name()`, Default Message, Default HTTP Status of Error Code.
-- From now on, to append more exceptional response, the rest job is just write the "state" on the enumerated error code.
+- From now on, to append more exceptional response, the rest job is just writing the "state" on the enum error code.
 
 That's going to be all.
 
