@@ -26,12 +26,12 @@ public enum MemberErrorCode implements ErrorCode {
     }
 
     @Override
-    public RuntimeException defaultException() {
+    public MemberException defaultException() {
         return new MemberException(this);
     }
 
     @Override
-    public RuntimeException defaultException(Throwable cause) {
+    public MemberException defaultException(Throwable cause) {
         return new MemberException(this, cause);
     }
 }
