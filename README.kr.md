@@ -12,18 +12,63 @@
 
 # 구현
 
-- **`Custom Exception`**은 우리가 핸들링 할 대부분의 예외의 부모 타입으로 사용됩니다. 이로써 일반화가 쉬워집니다.
-- **`Error Code`**는 상위 인터페이스로, 우리가 사용할 열거형(enum) 커스텀 에러 코드들을 확장할 때 사용합니다.
-- **`Global Exception Handler`**를 통해 정형적인 에러 양식을 제공하도록 일반화합니다.
-- 이렇게만 해 두면 더 이상 **`Global Exception Handler`**에 새 메서드를 추가하지 않아도 됩니다. 기본 양식을 사용하려고 한다면요.
+|       Class/Interface        | Description                                                                                                                                                                 |
+|:----------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        (I) Error Code        | 인터페이스로 작성된 이 에러 코드는, 열거형으로 작성된 다른 에러 코드의 상위 타입 역할을 합니다.                                                                                                                     |
+|     (C) Custom Exception     | 모든 커스텀 예외들의 상위 타입 역할을 합니다. 각각의 커스텀 예외들이 이 예외를 상속받지 않고 바로 RuntimeException을 상속받아도 되겠지만, 그러면 Global Exception Handler에서 코드 하나로 모든 커스텀 예외에 대해 일괄적인 처리를 간단히 지원하는 방식이 적용되지 않습니다. |
+| (C) Global Exception Handler | 커스텀 예외가 발생할 때 사전에 따로 처리되지 않은 경우 이곳으로 점프하도록 구현합니다. 그러면 예외 상황에 대한 응답을 줄 수 있습니다.                                                                                               |
+
+- 이렇게만 해 두면 더 이상 `Global Exception Handler`에 새 메서드를 추가하지 않아도 됩니다.
+  - 기본 예외 응답 양식을 사용해 응답합니다.
+  - `CustomException`에는 `ErrorCode`가 담깁니다. 기본생성자를 사용한 경우 DEFAULT 에러 코드가 담깁니다.
+  - `ErrorCode`에 있는 `name()`, Default Message, Default HTTP Status 등을 통해서 양식을 완성합니다.
 - 이제 새로운 예외 응답을 추가하려면, 열거형 에러 코드에 새로운 상태를 추가하기만 하면 됩니다.
 
-그것만 하면 관리가 완료됩니다.
-팀원들에게 열거형 에러 코드를 추가하도록만 하십시오. 그러면 앞으로 글로벌 익셉션 핸들러가 알아서 그것을 처리할 것입니다.
+```java
+@RequiredArgsConstructor
+public enum MemberErrorCode implements ErrorCode {
+    USERNAME_ALREADY_EXISTS(
+            "이미 사용 중인 계정입니다.", HttpStatus.CONFLICT),
+    SIGN_UP_FAILED_DEFAULT(
+            "회원 가입을 다시 진행해 주십시오. 오류가 지속되는 경우 문의하시기 바랍니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    MEMBER_NOT_FOUND(
+            "회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+    DEFAULT(
+            "회원 취급 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+
+    private final String MESSAGE;
+    private final HttpStatus STATUS;
+    
+    @Override
+    public HttpStatus defaultHttpStatus() {
+        return STATUS;
+    }
+
+    @Override
+    public String defaultMessage() {
+        return MESSAGE;
+    }
+
+    @Override
+    public MemberException defaultException() {
+        return new MemberException(this);
+    }
+
+    @Override
+    public MemberException defaultException(Throwable cause) {
+        return new MemberException(this, cause);
+    }
+}
+```
+
+팀원들에게 평소에는 열거형 에러 코드에 항목만 추가하도록 안내하십시오.
+그러면 앞으로 글로벌 익셉션 핸들러가 알아서 상태 코드를 포함해 메시지와 예외의 이름, 상태의 이름 등을 처리할 것입니다.
+
+원하는 단위에서 새로운 열거형 에러 코드 클래스를 생성하는 경우, 위 구현을 참고해 간단한 준비만 갖추십시오.
 
 ---
 
-# 환경
+# Demo 실행 환경
 
 ## 도커 컴포즈로 간단하게 모든 환경을 구축할 수 있도록 준비했습니다.
 

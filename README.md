@@ -12,19 +12,62 @@ English |
 
 # Implementation Overview
 
-- `Custom Exception` is a super class of every exception class we handle.
-- `Error Code` is an interface to expand enumerated `Custom Error Codes`(enum class).
-- `Global Exception Handler` will provide specified error format.
-- You don't have to append any method to `Global Exception Handler`, if you will use the base format.
-- From now on, when appending one more exceptional response, just append one more state to enumerated error code.
+|       Class/Interface        | Description                                                                                                                                                         |
+|:----------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        (I) Error Code        | This interface is a super type of each enumerated error code class.                                                                                                 |
+|     (C) Custom Exception     | This is super class of every custom exception. Global Exception Handler will simply treat when your custom exception is extended with this `CustomException` class. |
+| (C) Global Exception Handler | Unhandled custom exception will come here. Then your controller will response the api error format about the situation.                                             |
+
+- `Global Exception Handler` doesn't need more method, initially.
+    - Base format of exception response will be used.
+    - `CustomException` has an `ErrorCode`. Default constructor will use DEFAULT_ERROR_CODE.
+    - API Error format will be completed with `name()`, Default Message, Default HTTP Status of Error Code.
+- From now on, to append more exceptional response, the rest job is just write the "state" on the enumerated error code.
 
 That's going to be all.
 
-Let your team append enumerated `Error Code`, then it will be caught by `Global Exception Handler`.
+What your team should remember for it is, when writing "state" for exception, it will be caught by `Global Exception Handler`.
+
+```java
+@RequiredArgsConstructor
+public enum MemberErrorCode implements ErrorCode {
+    USERNAME_ALREADY_EXISTS(
+            "This username is already used.", HttpStatus.CONFLICT),
+    SIGN_UP_FAILED_DEFAULT(
+            "Retry later, please. Report us if this error keep going.", HttpStatus.INTERNAL_SERVER_ERROR),
+    MEMBER_NOT_FOUND(
+            "There is no information about those user.", HttpStatus.NOT_FOUND),
+    DEFAULT(
+            "Some error occurred about user system.", HttpStatus.INTERNAL_SERVER_ERROR);
+
+    private final String MESSAGE;
+    private final HttpStatus STATUS;
+    
+    @Override
+    public HttpStatus defaultHttpStatus() {
+        return STATUS;
+    }
+
+    @Override
+    public String defaultMessage() {
+        return MESSAGE;
+    }
+
+    @Override
+    public MemberException defaultException() {
+        return new MemberException(this);
+    }
+
+    @Override
+    public MemberException defaultException(Throwable cause) {
+        return new MemberException(this, cause);
+    }
+}
+```
 
 ---
 
-# Environments
+# Environments for Demo
 
 ## Docker Compose Will Prepare All Environments You Need
 
