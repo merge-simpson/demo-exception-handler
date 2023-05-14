@@ -10,6 +10,7 @@ import java.util.List;
 
 @Builder
 public record ApiError(
+        // Fields: 이곳에 작성한 것들이 멤버이자, 생성자 순서에 해당.
         String code,
         Integer status,
         String name,
@@ -17,7 +18,8 @@ public record ApiError(
         @JsonInclude(Include.NON_EMPTY) List<ApiSubError> subErrors,
         LocalDateTime timestamp
 ) {
-    public ApiError {
+    public ApiError { // <-- 소괄호 없는 생성자는:
+        // 생성자가 쓰일 때, 생성자의 파라미터에 대한 검토와 변경을 수행하는 공간.
         if (code == null) code = "API_ERROR";
         if (status == null) status = 500;
         if (name == null) name = "ApiError";
