@@ -30,16 +30,14 @@ public record ApiError(
     public record ApiSubError(String field, String message) {}
 
     public static ApiError of(HttpStatus httpStatus) {
-        return ApiError.builder()
-                .code(httpStatus.name())
-                .status(httpStatus.value())
-                .name(httpStatus.getReasonPhrase())
-                .message(httpStatus.series().name())
-                .build();
+        return of(httpStatus, new ApiSubError[0]);
     }
 
     public static ApiError of(HttpStatus httpStatus, ApiSubError... subError) {
-        List<ApiSubError> subErrors = List.of(subError);
+        return of(httpStatus, List.of(subError));
+    }
+
+    public static ApiError of(HttpStatus httpStatus, List<ApiSubError> subErrors) {
 
         return ApiError.builder()
                 .code(httpStatus.name())
@@ -51,6 +49,15 @@ public record ApiError(
     }
 
     public static ApiError of(ErrorCode errorCode) {
+        return of(errorCode, new ApiSubError[0]);
+    }
+
+    public static ApiError of(ErrorCode errorCode, ApiSubError... subError) {
+        List<ApiSubError> subErrors = List.of(subError);
+        return of(errorCode, subErrors);
+    }
+
+    public static ApiError of(ErrorCode errorCode, List<ApiSubError> subErrors) {
         String errorName = errorCode.defaultException().getClass().getName();
         errorName = errorName.substring(errorName.lastIndexOf('.') + 1);
 
@@ -58,17 +65,6 @@ public record ApiError(
                 .code(errorCode.name())
                 .status(errorCode.defaultHttpStatus().value())
                 .name(errorName)
-                .message(errorCode.defaultMessage())
-                .build();
-    }
-
-    public static ApiError of(ErrorCode errorCode, ApiSubError... subError) {
-        List<ApiSubError> subErrors = List.of(subError);
-
-        return ApiError.builder()
-                .code(errorCode.name())
-                .status(errorCode.defaultHttpStatus().value())
-                .name(errorCode.defaultException().getClass().getName())
                 .message(errorCode.defaultMessage())
                 .subErrors(subErrors)
                 .build();
