@@ -27,6 +27,7 @@ public record ApiError(
         if (timestamp == null) timestamp = LocalDateTime.now();
     }
 
+    @Builder
     public record ApiSubError(String field, String message) {}
 
     public static ApiError of(HttpStatus httpStatus) {
