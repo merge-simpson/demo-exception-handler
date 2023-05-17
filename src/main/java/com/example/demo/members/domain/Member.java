@@ -5,6 +5,8 @@ import com.example.demo.web.support.jpa.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Builder;
 
 import java.time.OffsetDateTime;
@@ -20,6 +22,7 @@ public final class Member extends BaseEntity {
     @JsonInclude(Include.NON_NULL)
     public Integer age;
     @JsonInclude(Include.NON_NULL)
+    @Enumerated(EnumType.STRING)
     @Builder.Default
     public MemberStatus status = MemberStatus.PENDING;
     @JsonInclude(Include.NON_NULL)
