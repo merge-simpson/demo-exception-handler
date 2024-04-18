@@ -16,26 +16,28 @@ English |
 - Syntax Level: Java 17(JDK 17) ⏤ `required`
 - Spring Boot 3
 - Docker Compose ⏤ `required`
-- Flyway: To construct your local db schema, when booting server application.
-- MapStruct: To convert dto, jpa entity, domain models.
+- Flyway: Constructs the schema in the local DB. Tables are created automatically when the server application boots.
+- MapStruct: Transforms DTOs, JPA Entities, domain models, etc.
 
 # Implementation Overview
 
-|       Class/Interface        | Description                                                                                                                                                         |
-|:----------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|        (I) Error Code        | This interface is a super type of each enumerated error code class.                                                                                                 |
-|     (C) Custom Exception     | This is super class of every custom exception. Global Exception Handler will simply treat when your custom exception is extended with this `CustomException` class. |
-| (C) Global Exception Handler | Unhandled custom exception will come here. Then your controller will response the api error format about the situation.                                             |
+|       Class/Interface        | Description                                                                                                                                                                                                      |
+|:----------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        (I) Error Code        | This interface serves as a super type for each enumerated error code class.                                                                                                                                      |
+|     (C) Custom Exception     | Serves as the superclass for all custom exceptions. Even if each custom exception could inherit directly from RuntimeException, that would not allow for simple, uniform handling by the GlobalExceptionHandler. |
+| (C) Global Exception Handler | Handle a custom exception when it jumps to this location, without prior specific handling. And it supplies the response to the exception situation.                                                              |
 
-- `Global Exception Handler` doesn't need more method, initially.
-    - Base format of exceptional response will be used.
-    - `CustomException` has an `ErrorCode`. Default constructor will use DEFAULT_ERROR_CODE.
-    - API Error format will be completed with `name()`, Default Message, Default HTTP Status of Error Code.
-- From now on, to append more exceptional response, the rest job is just writing the "state" on the enum error code.
+- You don't have to add any more methods to `GlobalExceptionHandler`, if you want.
+    -  It uses a default exception response format.
+    - `CustomException` has an `ErrorCode`.
+      If instantiated with the default constructor, the `DEFAULT_ERROR_CODE` is used.
+    - API Error format will be completed with `name()`, `defaultMessage()`, `defaultHttpStatus()` from `ErrorCode`.
+- To add new exceptional responses, the simple rest job is just to add the enumerated item to the implemented enum error code.
 
-That's going to be all.
+That's all.
 
-What your team should remember for it is, when writing "state" for exception, it will be caught by `Global Exception Handler`.
+What your team should remember to use this is
+that your `ErrorCode` and each detailed custom exception will be caught by `Global Exception Handler`.
 
 ```java
 @RequiredArgsConstructor
@@ -79,32 +81,36 @@ public enum MemberErrorCode implements ErrorCode {
 
 ## Docker Compose Will Prepare All Environments You Need
 
-The easiest way is downloading and running [docker desktop](https://www.docker.com/products/docker-desktop/).
+The easiest way to install Docker Compose is to download and run [Docker Desktop](https://www.docker.com/products/docker-desktop/).
 
-It means you can prepare all environments using only one line of command with `docker-compose`.
+It means you can prepare all required local environments only with a line of command using `docker-compose`.
 
-Run this command at the root of project. If you don't know, search `change directory command`.
+Run below command at the root of the project. If you don't know, search "change directory command".
+
+And you should find the `docker-comopse.yml` when you use `dir`(window) or `ls`(mac, linux).
 
 ```shell
 docker-compose up -d
 ```
 
-If it doesn't work, check one more time, if docker desktop is opened. And reopen your terminal.
+If it doesn't work, check if Docker is running. Then reopen your terminal.
 
-Terminal can miss some programs installed via another way, when it was open.
+A terminal may not recognize a program which is installed while the terminal is open.
 
-### You Have to Retry?
+### Do You Have to Retry?
 
-If you took any mistake or edited the `docker-compose.yml` file, you can re-upload.
+If you need to repost due to a mistake or because you've modified the `docker-compose.yml` file,
+refer to the following commands.
 
 ```shell
+# -v means that you will also remove the volume container including DB data.
 docker-compose down -v
 docker-compose up -d
 ```
 
-## Access Database
+## Access The Database
 
-Local DB is already installed by `docker-compose`.
+Docker Compose already installed your new local DB.
 
 You can directly access the database with this:
 
