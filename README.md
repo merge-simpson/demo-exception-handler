@@ -2,6 +2,14 @@
 English |
 [**한국어**](https://github.com/merge-simpson/demo-exception-handler/blob/main/README.kr.md)
 
+# What to See
+
+- I decided to use `interface ErrorCode`, instead of `enum ErrorCode`.
+  - Then we can expand it, and classify the specific error codes.
+- A `CustomException` class is handled at `GlobalExceptionHandler`.
+  - Then we can treat the `ErrorCode` and `CustomException`.
+  - Additional methods for each detail custom exception or each error code are not required.
+
 # Spec Overview
 
 - Syntax Level: Java 17(JDK 17) ⏤ `required`
@@ -31,37 +39,36 @@ What your team should remember for it is, when writing "state" for exception, it
 ```java
 @RequiredArgsConstructor
 public enum MemberErrorCode implements ErrorCode {
-    USERNAME_ALREADY_EXISTS(
-            "This username is already used.", HttpStatus.CONFLICT),
-    SIGN_UP_FAILED_DEFAULT(
-            "Retry later, please. Report us if this error keep going.", HttpStatus.INTERNAL_SERVER_ERROR),
-    MEMBER_NOT_FOUND(
-            "There is no information about those user.", HttpStatus.NOT_FOUND),
-    DEFAULT(
-            "Some error occurred about user system.", HttpStatus.INTERNAL_SERVER_ERROR);
+  USERNAME_ALREADY_EXISTS("이미 사용 중인 계정입니다.", HttpStatus.CONFLICT),
+  SIGN_UP_FAILED_DEFAULT(
+          "회원 가입을 다시 진행해 주십시오. 오류가 지속되는 경우 문의하시기 바랍니다.",
+          HttpStatus.INTERNAL_SERVER_ERROR
+  ),
+  MEMBER_NOT_FOUND("회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+  DEFAULT("회원 취급 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 
-    private final String MESSAGE;
-    private final HttpStatus STATUS;
-    
-    @Override
-    public HttpStatus defaultHttpStatus() {
-        return STATUS;
-    }
+  private final String message;
+  private final HttpStatus status;
 
-    @Override
-    public String defaultMessage() {
-        return MESSAGE;
-    }
+  @Override
+  public String defaultMessage() {
+    return message;
+  }
 
-    @Override
-    public MemberException defaultException() {
-        return new MemberException(this);
-    }
+  @Override
+  public HttpStatus defaultHttpStatus() {
+    return status;
+  }
 
-    @Override
-    public MemberException defaultException(Throwable cause) {
-        return new MemberException(this, cause);
-    }
+  @Override
+  public MemberException defaultException() {
+    return new MemberException(this);
+  }
+
+  @Override
+  public MemberException defaultException(Throwable cause) {
+    return new MemberException(this, cause);
+  }
 }
 ```
 
@@ -78,7 +85,7 @@ It means you can prepare all environments using only one line of command with `d
 Run this command at the root of project. If you don't know, search `change directory command`.
 
 ```shell
-docker-compose up -d --build
+docker-compose up -d
 ```
 
 If it doesn't work, check one more time, if docker desktop is opened. And reopen your terminal.
@@ -91,7 +98,7 @@ If you took any mistake or edited the `docker-compose.yml` file, you can re-uplo
 
 ```shell
 docker-compose down -v
-docker-compose up -d --build
+docker-compose up -d
 ```
 
 ## Access Database
