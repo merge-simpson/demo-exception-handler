@@ -2,13 +2,14 @@
 English |
 [**한국어**](https://github.com/merge-simpson/demo-exception-handler/blob/main/README.kr.md)
 
-# What to See
+# Key Points
 
-- I decided to use `interface ErrorCode`, instead of `enum ErrorCode`.
-  - Then we can expand it, and classify the specific error codes.
-- A `CustomException` class is handled at `GlobalExceptionHandler`.
-  - Then we can treat the `ErrorCode` and `CustomException`.
-  - Additional methods for each detail custom exception or each error code are not required.
+- **I have decided to use `interface ErrorCode` instead of `enum ErrorCode`.
+  This will prove to be a better decision.** 
+  By doing so, we can extend the interface and classify the specific error codes as we wish.
+- **The `CustomException` class is handled by the `GlobalExceptionHandler`.**
+  This allows us to handle both `ErrorCode` and `CustomException`.
+  No additional code is needed to handle each specific custom exception or each error code.
 
 # Spec Overview
 
