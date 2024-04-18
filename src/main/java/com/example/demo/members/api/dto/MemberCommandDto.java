@@ -23,9 +23,4 @@ public record MemberCommandDto() {
             @Min(value = 0, message = "나이를 올바르게 입력해 주세요.")
             Integer age
     ) {}
-
-    @Builder
-    public record MemberSignUpResponseDto(
-            Boolean success
-    ) {}
 }
