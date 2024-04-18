@@ -100,4 +100,4 @@ Docker Compose로 제공하는 로컬 DB 접속 정보
 
 |   Host    | Port |    Database     | Username | Password |
 |:---------:|:----:|:---------------:|:--------:|:--------:|
-| localhost | 3306 | demo_db_mysql8  |   root   |   root   |
+| localhost | 3307 | demo_db_mysql8  |   root   |   root   |

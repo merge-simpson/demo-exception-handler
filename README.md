@@ -102,4 +102,4 @@ You can directly access the database with this:
 
 |   Host    | Port |    Database     | Username | Password |
 |:---------:|:----:|:---------------:|:--------:|:--------:|
-| localhost | 3306 | demo_db_mysql8  |   root   |   root   |
+| localhost | 3307 | demo_db_mysql8  |   root   |   root   |
