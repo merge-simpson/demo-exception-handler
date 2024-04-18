@@ -5,8 +5,8 @@ import com.example.demo.members.domain.Member;
 import com.example.demo.members.domain.type.MemberStatus;
 import com.example.demo.members.mapper.MemberDtoMapper;
 import com.example.demo.members.repository.MemberRepository;
-import com.example.demo.members.service.usecase.MemberRegistryUseCase;
-import com.example.demo.members.service.usecase.MemberPasswordResetUseCase;
+import com.example.demo.members.service.usecase.SignUpUseCase;
+import com.example.demo.members.service.usecase.ResetPasswordUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import static com.example.demo.common.support.Preconditions.validate;
 
 @Service
 @RequiredArgsConstructor
-public final class MemberCommandService implements MemberRegistryUseCase, MemberPasswordResetUseCase {
+public final class MemberCommandService implements SignUpUseCase, ResetPasswordUseCase {
     private final MemberRepository memberRepository;
     private final MemberDtoMapper memberDtoMapper;
 

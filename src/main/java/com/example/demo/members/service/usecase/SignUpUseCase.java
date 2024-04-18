@@ -4,7 +4,7 @@ import com.example.demo.members.api.dto.MemberCommandDto.MemberSignUpRequestDto;
 import com.example.demo.members.domain.Member;
 import com.example.demo.members.domain.type.MemberStatus;
 
-public interface MemberRegistryUseCase {
+public interface SignUpUseCase {
     Member signUp(Member member);
     Member signUp(MemberSignUpRequestDto dto, MemberStatus status);
 }
