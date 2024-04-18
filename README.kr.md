@@ -2,6 +2,14 @@
 [**English**](https://github.com/merge-simpson/demo-exception-handler/blob/main/README.md) |
 한국어
 
+# 보아야 할 내용
+
+- 이곳에서는 `interface ErrorCode`를 사용하기로 결정했습니다. 이는 `enum ErrorCode`보다 나은 결정이 될 것입니다.
+  - 이로써 우리는 인터페이스를 확장하여, 세부적인 에러 코드를 우리가 원하는 대로 분류할 수 있습니다.
+- `CustomException` 클래스는 `GlobalExceptionHandler`에서 취급합니다.
+  - 이로써 우리는 `ErrorCode`와 `CustomException`을 처리할 수 있습니다.
+  - 각각의 세부적인 커스텀 예외나 각 에러 코드를 처리하기 위한 추가적인 코드는 필요하지 않습니다.
+
 # 스펙
 
 - 신택스 수준: 자바 17 ⏤ `설치 필요`
@@ -27,37 +35,36 @@
 ```java
 @RequiredArgsConstructor
 public enum MemberErrorCode implements ErrorCode {
-    USERNAME_ALREADY_EXISTS(
-            "이미 사용 중인 계정입니다.", HttpStatus.CONFLICT),
-    SIGN_UP_FAILED_DEFAULT(
-            "회원 가입을 다시 진행해 주십시오. 오류가 지속되는 경우 문의하시기 바랍니다.", HttpStatus.INTERNAL_SERVER_ERROR),
-    MEMBER_NOT_FOUND(
-            "회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
-    DEFAULT(
-            "회원 취급 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+  USERNAME_ALREADY_EXISTS("이미 사용 중인 계정입니다.", HttpStatus.CONFLICT),
+  SIGN_UP_FAILED_DEFAULT(
+          "회원 가입을 다시 진행해 주십시오. 오류가 지속되는 경우 문의하시기 바랍니다.",
+          HttpStatus.INTERNAL_SERVER_ERROR
+  ),
+  MEMBER_NOT_FOUND("회원을 찾을 수 없습니다.", HttpStatus.NOT_FOUND),
+  DEFAULT("회원 취급 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
 
-    private final String MESSAGE;
-    private final HttpStatus STATUS;
-    
-    @Override
-    public HttpStatus defaultHttpStatus() {
-        return STATUS;
-    }
+  private final String message;
+  private final HttpStatus status;
 
-    @Override
-    public String defaultMessage() {
-        return MESSAGE;
-    }
+  @Override
+  public String defaultMessage() {
+    return message;
+  }
 
-    @Override
-    public MemberException defaultException() {
-        return new MemberException(this);
-    }
+  @Override
+  public HttpStatus defaultHttpStatus() {
+    return status;
+  }
 
-    @Override
-    public MemberException defaultException(Throwable cause) {
-        return new MemberException(this, cause);
-    }
+  @Override
+  public MemberException defaultException() {
+    return new MemberException(this);
+  }
+
+  @Override
+  public MemberException defaultException(Throwable cause) {
+    return new MemberException(this, cause);
+  }
 }
 ```
 
@@ -79,7 +86,7 @@ public enum MemberErrorCode implements ErrorCode {
 프로젝트 루트 경로에서 다음 명령어를 실행하시면 됩니다. 프로젝트 루트에서 실행하라는 말을 모르겠다면, `cd 명령어`를 키워드로 검색해 보세요.
 
 ```shell
-docker-compose up -d --build
+docker-compose up -d
 ```
 
 만약 작동하지 않는다면, 도커 데스크톱이 실행되고 있는지 다시 확인하고, 터미널을 다시 여세요.
@@ -91,7 +98,7 @@ docker-compose up -d --build
 
 ```shell
 docker-compose down -v
-docker-compose up -d --build
+docker-compose up -d
 ```
 
 ## 데이터베이스 접속
