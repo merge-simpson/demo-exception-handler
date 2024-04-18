@@ -3,7 +3,7 @@ package com.example.demo.members.service;
 import com.example.demo.members.api.dto.MemberCommandDto.MemberSignUpRequestDto;
 import com.example.demo.members.domain.Member;
 import com.example.demo.members.domain.type.MemberStatus;
-import com.example.demo.members.mapper.DtoMemberMapper;
+import com.example.demo.members.mapper.MemberDtoMapper;
 import com.example.demo.members.repository.MemberRepository;
 import com.example.demo.members.service.usecase.MemberRegistryUseCase;
 import com.example.demo.members.service.usecase.MemberPasswordResetUseCase;
@@ -17,7 +17,7 @@ import static com.example.demo.common.support.Preconditions.validate;
 @RequiredArgsConstructor
 public final class MemberCommandService implements MemberRegistryUseCase, MemberPasswordResetUseCase {
     private final MemberRepository memberRepository;
-    private final DtoMemberMapper dtoMemberMapper;
+    private final MemberDtoMapper memberDtoMapper;
 
     @Override
     public Member signUp(Member member) {
@@ -27,6 +27,6 @@ public final class MemberCommandService implements MemberRegistryUseCase, Member
 
     @Override
     public Member signUp(MemberSignUpRequestDto dto, MemberStatus status) {
-        return signUp(dtoMemberMapper.toEntity(dto, status));
+        return signUp(memberDtoMapper.toEntity(dto, status));
     }
 }

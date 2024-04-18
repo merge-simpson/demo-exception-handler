@@ -1,31 +1,29 @@
 package com.example.demo.members.domain;
 
+import com.example.demo.common.support.jpa.UuidBaseEntity;
 import com.example.demo.members.domain.type.MemberStatus;
-import com.example.demo.common.support.jpa.BaseEntity;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.time.Instant;
 
 @Entity
-public final class Member extends BaseEntity {
-
-    @JsonInclude(Include.NON_EMPTY)
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public final class Member extends UuidBaseEntity {
     public String username;
-    @JsonInclude(Include.NON_EMPTY)
-    public String name;
-    @JsonInclude(Include.NON_NULL)
-    public Integer age;
-    @JsonInclude(Include.NON_NULL)
+    public String password;
+
+    public String fullName;
+
     @Enumerated(EnumType.STRING)
-    @Builder.Default
-    public MemberStatus status = MemberStatus.PENDING;
-    @JsonInclude(Include.NON_NULL)
-    @Builder.Default
-    public OffsetDateTime joinDate = OffsetDateTime.now(ZoneId.of("Asia/Seoul"));
+    public MemberStatus status;
+
+    private Instant createdAt;
+    private Instant updatedAt;
 }
