@@ -37,34 +37,8 @@ public record ApiResponseError(
                 .status(errorCode.defaultHttpStatus().value())
                 .name(errorName)
                 .message(exception.getMessage())
-                .cause(List.of(platCauseAsSubErrors(exception.getCause())))
+                .cause(ApiSimpleError.listOfCauseSimpleError(exception.getCause()))
                 .build();
-    }
-
-    public static ApiSimpleError[] platCauseAsSubErrors(Throwable cause) {
-        int depth = 0;
-        ApiSimpleError[] subErrors;
-        Throwable currentCause = cause;
-
-        while (currentCause != null) {
-            currentCause = currentCause.getCause();
-            depth++;
-        }
-
-        subErrors = new ApiSimpleError[depth];
-        currentCause = cause;
-        for (int i = 0; i < depth; i++) {
-            String errorFullName = currentCause.getClass().getSimpleName();
-            String field = errorFullName.substring(errorFullName.lastIndexOf('.') + 1);
-            subErrors[i] = ApiSimpleError.builder()
-                    .field(field)
-                    .message(currentCause.getLocalizedMessage())
-                    .build();
-
-            currentCause = currentCause.getCause();
-        }
-
-        return subErrors;
     }
 
     public ApiResponseError {
