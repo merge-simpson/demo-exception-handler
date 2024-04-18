@@ -6,6 +6,6 @@ import com.example.demo.members.domain.type.MemberStatus;
 import org.mapstruct.Mapper;
 
 @Mapper
-public interface DtoMemberMapper {
+public interface MemberDtoMapper {
     Member toEntity(MemberSignUpRequestDto requestBody, MemberStatus status);
 }
