@@ -1,7 +1,7 @@
 package com.example.demo.members.domain;
 
 import com.example.demo.members.domain.type.MemberStatus;
-import com.example.demo.web.support.jpa.BaseEntity;
+import com.example.demo.common.support.jpa.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import jakarta.persistence.Entity;

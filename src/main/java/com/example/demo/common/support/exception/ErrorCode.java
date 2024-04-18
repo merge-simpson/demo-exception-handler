@@ -1,4 +1,4 @@
-package com.example.demo.web.support.exception;
+package com.example.demo.common.support.exception;
 
 import org.springframework.http.HttpStatus;
 

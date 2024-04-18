@@ -1,4 +1,4 @@
-package com.example.demo.web.support.jpa;
+package com.example.demo.common.support.jpa;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

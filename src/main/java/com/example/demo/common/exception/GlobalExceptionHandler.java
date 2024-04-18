@@ -1,10 +1,10 @@
-package com.example.demo.web.exception;
+package com.example.demo.common.exception;
 
-import com.example.demo.web.exception.status2xx.NoContentException;
-import com.example.demo.web.support.exception.ApiError;
-import com.example.demo.web.support.exception.ApiError.ApiSubError;
-import com.example.demo.web.support.exception.CustomException;
-import com.example.demo.web.support.exception.ErrorCode;
+import com.example.demo.common.exception.status2xx.NoContentException;
+import com.example.demo.common.support.exception.ApiError;
+import com.example.demo.common.support.exception.ApiError.ApiSubError;
+import com.example.demo.common.support.exception.CustomException;
+import com.example.demo.common.support.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

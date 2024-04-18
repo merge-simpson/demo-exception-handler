@@ -1,4 +1,4 @@
-package com.example.demo.web.exception.status2xx;
+package com.example.demo.common.exception.status2xx;
 
 public class NoContentException extends RuntimeException {
     public NoContentException() {}

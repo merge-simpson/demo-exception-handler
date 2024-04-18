@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import static com.example.demo.members.exception.MemberErrorCode.USERNAME_ALREADY_EXISTS;
-import static com.example.demo.web.support.Preconditions.validate;
+import static com.example.demo.common.support.Preconditions.validate;
 
 @Service
 @RequiredArgsConstructor
