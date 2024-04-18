@@ -1,8 +1,5 @@
 package com.example.demo.members.api.dto;
 
-import com.example.demo.members.domain.constants.MemberValidationConstants.MemberValidationMessage;
-import com.example.demo.members.domain.constants.MemberValidationConstants.MemberValidation;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
