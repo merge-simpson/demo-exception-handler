@@ -1,4 +1,4 @@
-package com.example.demo.members.api.constants;
+package com.example.demo.members.domain.constants;
 
 // Compile Time Constants - Annotation Processor 적용 가능
 public final class MemberValidationConstants {
