@@ -2,6 +2,7 @@ package com.example.demo.auth.api;
 
 import com.example.demo.auth.api.dto.MemberQueryDto.MemberQueryAllResponseDto;
 import com.example.demo.auth.domain.Member;
+import com.example.demo.auth.readmodel.MemberReadModel.MemberListViewReadModel;
 import com.example.demo.auth.service.usecase.MemberSearchUseCase;
 import com.example.common.exception.status2xx.NoContentException;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +21,14 @@ public final class MemberQueryApi {
 
     @GetMapping("/members")
     public MemberQueryAllResponseDto all(
-            @PageableDefault(size=12, sort="joinDate", direction = Sort.Direction.DESC) Pageable pageable
+            @PageableDefault(size=15, sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable
     ) {
         // Page 관련 전처리
         // Zero Based Paging to One Based Paging(External)
         pageable = pageable.previousOrFirst(); // 0 이하는 모두 1 페이지.
 
         // Page<...> 사용 시 성능 저하가 발생하므로 삼갈 것. 여기서는 예시를 위해 작성함.
-        Page<Member> memberPage = memberSearchUseCase.findAll(pageable);
+        Page<MemberListViewReadModel> memberPage = memberSearchUseCase.findListViewPagedBy(pageable);
 
         if (memberPage.isEmpty()) throw new NoContentException();
 

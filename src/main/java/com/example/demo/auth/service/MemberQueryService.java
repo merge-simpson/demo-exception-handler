@@ -1,6 +1,7 @@
 package com.example.demo.auth.service;
 
 import com.example.demo.auth.domain.Member;
+import com.example.demo.auth.readmodel.MemberReadModel.MemberListViewReadModel;
 import com.example.demo.auth.repository.MemberRepository;
 import com.example.demo.auth.service.usecase.MemberSearchUseCase;
 import lombok.RequiredArgsConstructor;
@@ -16,5 +17,10 @@ public final class MemberQueryService implements MemberSearchUseCase {
     @Override
     public Page<Member> findAll(Pageable pageable) {
         return memberRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<MemberListViewReadModel> findListViewPagedBy(Pageable pageable) {
+        return memberRepository.findListViewPagedBy(pageable);
     }
 }
