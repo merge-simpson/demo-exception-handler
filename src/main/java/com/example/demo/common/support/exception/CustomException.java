@@ -4,45 +4,41 @@ import org.springframework.http.HttpStatus;
 
 public class CustomException extends RuntimeException {
 
-    // ===== statics =====
     private static ErrorCode getDefaultErrorCode() {
         return DefaultErrorCodeHolder.DEFAULT_ERROR_CODE;
     }
 
-    // ===== non-static fields =====
-    protected ErrorCode ERROR_CODE;
+    protected final ErrorCode errorCode;
 
-    // ===== Constructors =====
     public CustomException() {
-        this.ERROR_CODE = getDefaultErrorCode();
+        super(getDefaultErrorCode().defaultMessage());
+        this.errorCode = getDefaultErrorCode();
     }
 
     public CustomException(String message) {
         super(message);
-        this.ERROR_CODE = getDefaultErrorCode();
+        this.errorCode = getDefaultErrorCode();
     }
 
     public CustomException(String message, Throwable cause) {
         super(message, cause);
-        this.ERROR_CODE = getDefaultErrorCode();
+        this.errorCode = getDefaultErrorCode();
     }
 
     public CustomException(ErrorCode errorCode) {
         super(errorCode.defaultMessage());
-        this.ERROR_CODE = errorCode;
+        this.errorCode = errorCode;
     }
 
     public CustomException(ErrorCode errorCode, Throwable cause) {
         super(errorCode.defaultMessage(), cause);
-        this.ERROR_CODE = errorCode;
+        this.errorCode = errorCode;
     }
 
-    // ===== Non-static Methods =====
     public ErrorCode getErrorCode() {
-        return ERROR_CODE;
+        return errorCode;
     }
 
-    // ===== Inner Classes =====
     private static class DefaultErrorCodeHolder { // 사용할 때 로드 + 스레드 세이프(클래스 로드 타임은 동시성 보장됨.)
         private static final ErrorCode DEFAULT_ERROR_CODE = new ErrorCode() {
             @Override
@@ -61,12 +57,12 @@ public class CustomException extends RuntimeException {
             }
 
             @Override
-            public RuntimeException defaultException() {
+            public CustomException defaultException() {
                 return new CustomException(this);
             }
 
             @Override
-            public RuntimeException defaultException(Throwable cause) {
+            public CustomException defaultException(Throwable cause) {
                 return new CustomException(this, cause);
             }
         };
