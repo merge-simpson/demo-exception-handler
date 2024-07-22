@@ -1,16 +1,16 @@
-package com.example.demo.members.service;
+package com.example.demo.auth.service;
 
-import com.example.demo.members.api.dto.MemberCommandDto.MemberSignUpRequestDto;
-import com.example.demo.members.domain.Member;
-import com.example.demo.members.domain.type.MemberStatus;
-import com.example.demo.members.mapper.MemberDtoMapper;
-import com.example.demo.members.repository.MemberRepository;
-import com.example.demo.members.service.usecase.SignUpUseCase;
-import com.example.demo.members.service.usecase.ResetPasswordUseCase;
+import com.example.demo.auth.api.dto.MemberCommandDto.MemberSignUpRequestDto;
+import com.example.demo.auth.domain.Member;
+import com.example.demo.auth.domain.type.MemberStatus;
+import com.example.demo.auth.mapper.MemberDtoMapper;
+import com.example.demo.auth.repository.MemberRepository;
+import com.example.demo.auth.service.usecase.SignUpUseCase;
+import com.example.demo.auth.service.usecase.ResetPasswordUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.example.demo.members.exception.MemberErrorCode.USERNAME_ALREADY_EXISTS;
+import static com.example.demo.auth.exception.MemberErrorCode.USERNAME_ALREADY_EXISTS;
 import static com.example.common.exception.util.Preconditions.validate;
 
 @Service

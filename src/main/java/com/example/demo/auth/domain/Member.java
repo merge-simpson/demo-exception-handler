@@ -1,7 +1,7 @@
-package com.example.demo.members.domain;
+package com.example.demo.auth.domain;
 
 import com.example.common.jpa.support.UuidBaseEntity;
-import com.example.demo.members.domain.type.MemberStatus;
+import com.example.demo.auth.domain.type.MemberStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

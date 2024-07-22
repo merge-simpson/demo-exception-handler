@@ -1,4 +1,4 @@
-package com.example.demo.members.exception;
+package com.example.demo.auth.exception;
 
 import com.example.common.exception.support.ErrorCode;
 import lombok.RequiredArgsConstructor;

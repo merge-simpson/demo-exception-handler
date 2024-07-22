@@ -1,6 +1,6 @@
-package com.example.demo.members.repository;
+package com.example.demo.auth.repository;
 
-import com.example.demo.members.domain.Member;
+import com.example.demo.auth.domain.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

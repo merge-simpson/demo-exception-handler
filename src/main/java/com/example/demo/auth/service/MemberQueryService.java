@@ -1,8 +1,8 @@
-package com.example.demo.members.service;
+package com.example.demo.auth.service;
 
-import com.example.demo.members.domain.Member;
-import com.example.demo.members.repository.MemberRepository;
-import com.example.demo.members.service.usecase.MemberSearchUseCase;
+import com.example.demo.auth.domain.Member;
+import com.example.demo.auth.repository.MemberRepository;
+import com.example.demo.auth.service.usecase.MemberSearchUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

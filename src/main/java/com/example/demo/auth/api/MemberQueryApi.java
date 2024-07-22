@@ -1,8 +1,8 @@
-package com.example.demo.members.api;
+package com.example.demo.auth.api;
 
-import com.example.demo.members.api.dto.MemberQueryDto.MemberQueryAllResponseDto;
-import com.example.demo.members.domain.Member;
-import com.example.demo.members.service.usecase.MemberSearchUseCase;
+import com.example.demo.auth.api.dto.MemberQueryDto.MemberQueryAllResponseDto;
+import com.example.demo.auth.domain.Member;
+import com.example.demo.auth.service.usecase.MemberSearchUseCase;
 import com.example.common.exception.status2xx.NoContentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

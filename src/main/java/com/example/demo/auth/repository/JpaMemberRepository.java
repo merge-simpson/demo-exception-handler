@@ -1,6 +1,6 @@
-package com.example.demo.members.repository;
+package com.example.demo.auth.repository;
 
-import com.example.demo.members.domain.Member;
+import com.example.demo.auth.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 // 예제 아키텍처상 아직 같은 패키지에 관리하지만,

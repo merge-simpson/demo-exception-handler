@@ -1,4 +1,4 @@
-package com.example.demo.members.domain.type;
+package com.example.demo.auth.domain.type;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.RequiredArgsConstructor;

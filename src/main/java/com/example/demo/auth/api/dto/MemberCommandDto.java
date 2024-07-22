@@ -1,14 +1,14 @@
-package com.example.demo.members.api.dto;
+package com.example.demo.auth.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-import static com.example.demo.members.domain.constants.MemberValidationConstants.MemberValidation.FULL_NAME;
-import static com.example.demo.members.domain.constants.MemberValidationConstants.MemberValidation.PASSWORD;
-import static com.example.demo.members.domain.constants.MemberValidationConstants.MemberValidation.USERNAME;
-import static com.example.demo.members.domain.constants.MemberValidationConstants.MemberValidationMessage.FULL_NAME_MESSAGE;
-import static com.example.demo.members.domain.constants.MemberValidationConstants.MemberValidationMessage.PASSWORD_MESSAGE;
-import static com.example.demo.members.domain.constants.MemberValidationConstants.MemberValidationMessage.USERNAME_MESSAGE;
+import static com.example.demo.auth.domain.constants.MemberValidationConstants.MemberValidation.FULL_NAME;
+import static com.example.demo.auth.domain.constants.MemberValidationConstants.MemberValidation.PASSWORD;
+import static com.example.demo.auth.domain.constants.MemberValidationConstants.MemberValidation.USERNAME;
+import static com.example.demo.auth.domain.constants.MemberValidationConstants.MemberValidationMessage.FULL_NAME_MESSAGE;
+import static com.example.demo.auth.domain.constants.MemberValidationConstants.MemberValidationMessage.PASSWORD_MESSAGE;
+import static com.example.demo.auth.domain.constants.MemberValidationConstants.MemberValidationMessage.USERNAME_MESSAGE;
 
 public record MemberCommandDto() {
     public record MemberSignUpRequestDto(

@@ -1,6 +1,6 @@
-package com.example.demo.members.api.dto;
+package com.example.demo.auth.api.dto;
 
-import com.example.demo.members.domain.Member;
+import com.example.demo.auth.domain.Member;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Builder;

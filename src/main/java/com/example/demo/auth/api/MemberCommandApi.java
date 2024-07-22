@@ -1,8 +1,8 @@
-package com.example.demo.members.api;
+package com.example.demo.auth.api;
 
-import com.example.demo.members.api.dto.MemberCommandDto.MemberSignUpRequestDto;
-import com.example.demo.members.domain.type.MemberStatus;
-import com.example.demo.members.service.usecase.SignUpUseCase;
+import com.example.demo.auth.api.dto.MemberCommandDto.MemberSignUpRequestDto;
+import com.example.demo.auth.domain.type.MemberStatus;
+import com.example.demo.auth.service.usecase.SignUpUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
