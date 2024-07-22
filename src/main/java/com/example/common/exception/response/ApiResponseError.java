@@ -1,8 +1,8 @@
-package com.example.demo.common.support.exception.response;
+package com.example.common.exception.response;
 
-import com.example.demo.common.support.exception.CustomException;
-import com.example.demo.common.support.exception.ErrorCode;
-import com.example.demo.common.utils.text.TextCaseUtil;
+import com.example.common.exception.support.CustomException;
+import com.example.common.exception.support.ErrorCode;
+import com.example.common.util.text.TextCaseUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import lombok.Builder;

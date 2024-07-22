@@ -1,4 +1,4 @@
-package com.example.demo.common.utils.thread;
+package com.example.common.util.thread;
 
 public class ThreadUtil {
     /**

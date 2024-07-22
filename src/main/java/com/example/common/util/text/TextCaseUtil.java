@@ -1,4 +1,4 @@
-package com.example.demo.common.utils.text;
+package com.example.common.util.text;
 
 import java.util.concurrent.ConcurrentHashMap;
 

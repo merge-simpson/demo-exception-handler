@@ -1,9 +1,9 @@
-package com.example.demo.common.exception;
+package com.example.common.exception;
 
-import com.example.demo.common.exception.status2xx.NoContentException;
-import com.example.demo.common.support.exception.CustomException;
-import com.example.demo.common.support.exception.response.ApiResponseError;
-import com.example.demo.common.support.exception.response.ApiSimpleError;
+import com.example.common.exception.status2xx.NoContentException;
+import com.example.common.exception.support.CustomException;
+import com.example.common.exception.response.ApiResponseError;
+import com.example.common.exception.response.ApiSimpleError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

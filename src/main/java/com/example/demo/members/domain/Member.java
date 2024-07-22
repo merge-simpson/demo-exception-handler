@@ -1,6 +1,6 @@
 package com.example.demo.members.domain;
 
-import com.example.demo.common.support.jpa.UuidBaseEntity;
+import com.example.common.jpa.support.UuidBaseEntity;
 import com.example.demo.members.domain.type.MemberStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

@@ -1,7 +1,7 @@
 package com.example.demo.members.exception;
 
-import com.example.demo.common.support.exception.CustomException;
-import com.example.demo.common.support.exception.ErrorCode;
+import com.example.common.exception.support.CustomException;
+import com.example.common.exception.support.ErrorCode;
 
 public class MemberException extends CustomException {
     // 귀찮으면 이런 하위 예외 타입 안 만들고, enum 에러 코드만 새로 생성해서 defaultException 작성 시 바로 new CustomException 써도 됨.

@@ -1,4 +1,4 @@
-package com.example.demo.common.utils.exception;
+package com.example.common.exception.util;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

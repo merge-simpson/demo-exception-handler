@@ -1,6 +1,6 @@
 package com.example.demo.members.exception;
 
-import com.example.demo.common.support.exception.ErrorCode;
+import com.example.common.exception.support.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 

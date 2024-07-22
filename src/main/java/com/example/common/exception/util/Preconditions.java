@@ -1,7 +1,7 @@
-package com.example.demo.common.support;
+package com.example.common.exception.util;
 
 
-import com.example.demo.common.support.exception.ErrorCode;
+import com.example.common.exception.support.ErrorCode;
 
 import java.text.MessageFormat;
 import java.util.Objects;

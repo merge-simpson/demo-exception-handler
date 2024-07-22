@@ -3,7 +3,7 @@ package com.example.demo.members.api;
 import com.example.demo.members.api.dto.MemberQueryDto.MemberQueryAllResponseDto;
 import com.example.demo.members.domain.Member;
 import com.example.demo.members.service.usecase.MemberSearchUseCase;
-import com.example.demo.common.exception.status2xx.NoContentException;
+import com.example.common.exception.status2xx.NoContentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
