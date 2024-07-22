@@ -1,7 +1,6 @@
 package com.example.demo.auth.api;
 
 import com.example.demo.auth.api.dto.MemberQueryDto.MemberQueryAllResponseDto;
-import com.example.demo.auth.domain.Member;
 import com.example.demo.auth.readmodel.MemberReadModel.MemberListViewReadModel;
 import com.example.demo.auth.service.usecase.MemberSearchUseCase;
 import com.example.common.exception.status2xx.NoContentException;
