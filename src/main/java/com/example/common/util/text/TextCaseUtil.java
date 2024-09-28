@@ -4,10 +4,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class TextCaseUtil {
 
-    private static final ConcurrentHashMap<String, String> savedCapitalizationMap = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, String> cachedCapitalizationMap = new ConcurrentHashMap<>();
 
     public static String capitalizeAndSaveUpperSnakeCase(String upperSnakeCase) {
-        return savedCapitalizationMap.computeIfAbsent(upperSnakeCase, TextCaseUtil::capitalizeUpperSnakeCase);
+        return cachedCapitalizationMap.computeIfAbsent(upperSnakeCase, TextCaseUtil::capitalizeUpperSnakeCase);
     }
 
     public static String capitalizeUpperSnakeCase(String upperSnakeCase) {

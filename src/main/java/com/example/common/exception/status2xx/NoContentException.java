@@ -1,8 +1,8 @@
 package com.example.common.exception.status2xx;
 
 /**
- * Not for error response, but for exceptional logic for 204 NO_CONTENT.
- *  Optional responsive data set sometimes requires empty response body and this response status.
+ * This exception would provide the status of 204 NO_CONTENT. (not an error response)
+ * It can be used to escape a routine using Java exception in some specific logic.
  */
 public class NoContentException extends RuntimeException {
     public NoContentException() {}

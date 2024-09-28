@@ -1,46 +1,56 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.0.6'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.springframework.boot' version '3.3.3'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    configureEach {
+        // exclude logback
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+    }
+}
 
 repositories {
     mavenCentral()
+    google()
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-    // JPA Relatives
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'mysql:mysql-connector-java:8.0.31'
+    // Database
+    runtimeOnly 'com.mysql:mysql-connector-j'
 
     // Flyway
-    implementation 'org.flywaydb:flyway-core:9.14.1'
-    implementation 'org.flywaydb:flyway-mysql'
-    testImplementation 'org.flywaydb:flyway-mysql'
+    implementation 'org.flywaydb:flyway-core:10.18.2'
+    runtimeOnly 'org.flywaydb:flyway-mysql:10.18.2'
 
-    // Lombok
+    // lombok
     compileOnly 'org.projectlombok:lombok'
-    testCompileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testAnnotationProcessor 'org.projectlombok:lombok'
-
-    // Logging
-    implementation 'org.apache.logging.log4j:log4j-api'
-    implementation 'org.apache.logging.log4j:log4j-core'
 
     // Map Struct
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'

@@ -1,28 +1,31 @@
-server:
-  port: 80
+server.port: 8080
 
 spring:
   profiles:
     active: prod
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ${db.url:jdbc:mysql://localhost:3306/demo_db_mysql8?allowPublicKeyRetrieval=true}
+    url: ${db.url:jdbc:mysql://localhost:3307/demo_master_mysql8?allowPublicKeyRetrieval=true}
     username: ${db.username:root}
     password: ${db.password:root}
     hikari:
-      connectionTimeout: 10000
-      idleTimeout: 600000
-      maximum-pool-size: 300
       minimum-idle: 5
-      maxLifetime: 10000
-      leak-detection-threshold: 2000
+      maximum-pool-size: 300
+      connectionTimeout: 30_000
+      idleTimeout: 600_000
+      maxLifetime: 1_800_000
+      leak-detection-threshold: 2_000
+
   jpa:
     properties:
       hibernate:
         format-sql: false
         dialect: org.hibernate.dialect.MySQLDialect
     show-sql: true
+    hibernate:
+      ddl-auto: none
+
   flyway:
-    enabled: true
     baseline-on-migrate: true
     locations: classpath:/db/migration # default

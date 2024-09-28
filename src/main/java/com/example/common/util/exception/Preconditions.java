@@ -1,4 +1,4 @@
-package com.example.common.exception.util;
+package com.example.common.util.exception;
 
 
 import com.example.common.exception.support.ErrorCode;

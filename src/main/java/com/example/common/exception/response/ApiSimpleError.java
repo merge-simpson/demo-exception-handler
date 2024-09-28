@@ -8,13 +8,13 @@ import java.util.List;
 @Builder
 public record ApiSimpleError(@NonNull String field, @NonNull String message) {
     public static List<ApiSimpleError> listOfCauseSimpleError(Throwable cause) {
-        return List.of(arrayOfCauseSimpleError(cause));
+        return List.of(normalizeCause(cause));
     }
 
-    public static ApiSimpleError[] arrayOfCauseSimpleError(Throwable cause) {
+    public static ApiSimpleError[] normalizeCause(Throwable cause) {
         int depth = 0;
         ApiSimpleError[] subErrors;
-        Throwable currentCause = cause;
+        Throwable currentCause = cause.getCause();
 
         while (currentCause != null) {
             currentCause = currentCause.getCause();

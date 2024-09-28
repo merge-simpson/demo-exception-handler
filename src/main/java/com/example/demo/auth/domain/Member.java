@@ -1,7 +1,7 @@
 package com.example.demo.auth.domain;
 
 import com.example.common.jpa.support.UuidBaseEntity;
-import com.example.demo.auth.domain.type.MemberStatus;
+import com.example.demo.auth.domain.data.MemberStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,12 +18,10 @@ import java.time.Instant;
 public final class Member extends UuidBaseEntity {
     public String username;
     public String password;
-
     public String fullName;
 
     @Enumerated(EnumType.STRING)
     public MemberStatus status;
-
     private Instant createdAt;
     private Instant updatedAt;
 }

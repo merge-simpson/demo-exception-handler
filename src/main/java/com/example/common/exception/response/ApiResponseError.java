@@ -28,9 +28,10 @@ public record ApiResponseError(
         String message,
         String error,
         @JsonInclude(Include.NON_EMPTY) List<ApiSimpleError> cause,
-        Instant timestamp
+        Instant timestamp,
+        @JsonInclude(Include.NON_NULL) String path
 ) {
-    public static ApiResponseError of(CustomException exception) {
+    public static ApiResponseError of(CustomException exception, String path) {
         ErrorCode errorCode = exception.getErrorCode();
         String errorName = exception.getClass().getName();
         errorName = errorName.substring(errorName.lastIndexOf('.') + 1);
@@ -44,8 +45,13 @@ public record ApiResponseError(
                 .name(errorName)
                 .message(exception.getMessage())
                 .error(error)
-                .cause(ApiSimpleError.listOfCauseSimpleError(exception.getCause()))
+                .cause(ApiSimpleError.listOfCauseSimpleError(exception))
+                .path(path)
                 .build();
+    }
+
+    public static ApiResponseError of(CustomException exception) {
+        return of(exception, null);
     }
 
     public ApiResponseError {

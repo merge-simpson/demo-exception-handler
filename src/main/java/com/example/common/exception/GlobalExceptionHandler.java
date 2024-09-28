@@ -3,10 +3,12 @@ package com.example.common.exception;
 import com.example.common.exception.status2xx.NoContentException;
 import com.example.common.exception.support.CustomException;
 import com.example.common.exception.response.ApiResponseError;
-import com.example.common.exception.response.ApiSimpleError;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,7 +17,10 @@ import java.time.Instant;
 
 @RestControllerAdvice
 public final class GlobalExceptionHandler {
-    // 따로 더 구체적인 선언이 없다면, CustomException을 상속받은 모든 예외가 이곳으로 온다. 따라서 이 양식을 따르는 한 따로 더 만들 익셉션 핸들러 메서드가 없다.
+
+    /** CustomException 핸들링 예시
+     *  더 구체적인 예외를 핸들링하는 메서드가 없다면 이곳에서 핸들링한다.
+     */
     @ExceptionHandler(CustomException.class)
     public ResponseEntity<ApiResponseError> handleMemberException(CustomException exception) {
         ApiResponseError response = ApiResponseError.of(exception);
@@ -23,34 +28,53 @@ public final class GlobalExceptionHandler {
                 .getErrorCode()
                 .defaultHttpStatus();
 
-        return new ResponseEntity<>(response, httpStatus);
+        return ResponseEntity
+                .status(httpStatus)
+                .body(response);
     }
 
     /**
      * validation 애노테이션(유효성) 예외를 최종적으로 이곳에서 처리할 수 있음.
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponseError> handleMethodArgumentNotValidException(
-            MethodArgumentNotValidException exception) {
-        FieldError fieldError = exception.getBindingResult().getFieldError();
+    public ResponseEntity<?> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException exception,
+            HttpServletRequest request
+    ) {
+        BindingResult bindingResult = exception.getBindingResult();
+        record Response(
+                Instant timestamp,
+                int status,
+                String error,
+                @JsonInclude(Include.NON_NULL)
+                String message,
+                String path
+        ) {}
 
-        ApiResponseError response = ApiResponseError.builder()
-                .name(exception.getBody().getTitle())
-                .message(
-                        fieldError == null ? exception.getMessage() : fieldError.getDefaultMessage()
-                )
-                .status(exception.getStatusCode().value())
-                .timestamp(Instant.now())
-                .cause(ApiSimpleError.listOfCauseSimpleError(exception.getCause()))
-                .build();
+        @SuppressWarnings("ConstantConditions")
+        String message = bindingResult.hasFieldErrors() ?
+                bindingResult.getFieldError().getDefaultMessage()
+                : null;
+
+        Response body = new Response(
+                Instant.now(),
+                exception.getStatusCode().value(),
+                exception.getStatusCode().toString(),
+                message,
+                request.getRequestURI()
+        );
 
         return ResponseEntity
-                .status(exception.getStatusCode())
-                .body(response);
+                .badRequest()
+                .body(body);
     }
 
+    /**
+     * This exception would provide the status of 204 NO_CONTENT. (not an error response)
+     * It can be used to escape a routine using Java exception in some specific logic.
+     */
     @ExceptionHandler(NoContentException.class)
-    public ResponseEntity<?> handleNoContentException(NoContentException exception) {
+    public ResponseEntity<?> handleNoContentException(NoContentException ignoredException) {
         return ResponseEntity.noContent().build();
     }
 }

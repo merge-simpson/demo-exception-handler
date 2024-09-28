@@ -5,12 +5,12 @@ public class ThreadUtil {
      * @return string of call stack trace
      */
     public static String callStack() {
-        StringBuilder builder = new StringBuilder("call-stack trace\n");
+        StringBuilder builder = new StringBuilder("call-stack trace");
         StackTraceElement[] elements = Thread.currentThread().getStackTrace();
 
-        for (int i = 1; i < elements.length; i++) {
+        for (int i = 2; i < elements.length; i++) {
             StackTraceElement s = elements[i];
-            builder.append("\tat ");
+            builder.append("\n\tat ");
             builder.append(s.getClassName());
             builder.append(".");
             builder.append(s.getMethodName());
