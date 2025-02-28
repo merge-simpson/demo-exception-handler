@@ -76,5 +76,5 @@ compileTestJava {
 // Enable Java Preview (3)
 test {
     useJUnitPlatform()
-    jvmArgs(['--enable-preview', '-Amapstruct.defaultComponentModel=spring'])
+    jvmArgs(['--enable-preview'])
 }
