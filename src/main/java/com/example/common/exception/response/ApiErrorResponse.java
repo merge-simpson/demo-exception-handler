@@ -1,7 +1,6 @@
 package com.example.common.exception.response;
 
 import com.example.common.exception.support.CustomException;
-import com.example.common.exception.support.ErrorCode;
 import com.example.common.util.text.TextCaseUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -44,12 +43,12 @@ public record ApiErrorResponse(
     }
 
     public static ApiErrorResponse of(CustomException exception, String path, Map<String, Object> payload) {
-        ErrorCode errorCode = exception.getErrorCode();
-        String errorName = exception.getClass().getName();
-        errorName = errorName.substring(errorName.lastIndexOf('.') + 1);
-        String error = TextCaseUtil.capitalizeAndSaveUpperSnakeCase(
+        var errorCode = exception.getErrorCode();
+        var errorName = exception.getClass().getName();
+        var error = TextCaseUtil.capitalizeAndSaveUpperSnakeCase(
                 errorCode.httpStatus().name()
         );
+        errorName = errorName.substring(errorName.lastIndexOf('.') + 1);
 
         return ApiErrorResponse.builder()
                 .code(errorCode.name())
