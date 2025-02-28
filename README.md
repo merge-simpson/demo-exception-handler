@@ -121,23 +121,43 @@ public enum SignUpErrorCode implements ErrorCode {
     }
 
     @Override
-    public String defaultMessage() {
+    public String message() {
         return message;
     }
 
     @Override
-    public HttpStatus defaultHttpStatus() {
+    public HttpStatus httpStatus() {
         return status;
     }
 
     @Override
-    public SignUpException defaultException() {
+    public SignUpException exception() {
         return new SignUpException(this);
     }
 
     @Override
-    public SignUpException defaultException(Throwable cause) {
+    public SignUpException exception(Throwable cause) {
         return new SignUpException(this, cause);
+    }
+
+    @Override
+    public SignUpException exception(Runnable action) {
+        return new SignUpException(this, action);
+    }
+
+    @Override
+    public SignUpException exception(Runnable action, Throwable cause) {
+        return new SignUpException(this, action, cause);
+    }
+
+    @Override
+    public SignUpException exception(Supplier<Map<String, Object>> payloadSupplier) {
+        return new SignUpException(this, payloadSupplier);
+    }
+
+    @Override
+    public SignUpException exception(Throwable cause) {
+        return new SignUpException(this, payloadSupplier, cause);
     }
 }
 ```
