@@ -8,18 +8,77 @@
 
 - Syntax Version: JDK 17 (Preview)
 - Docker Compose (Download: [Docker Desktop](https://www.docker.com/products/docker-desktop/))
+# Features
 
-# 기능
+**확장성 있는 에러코드 설계를 제공합니다.**  
+대부분의 기능은 예시이므로, 종종 필요 이상으로 구현되거나 너무 간단한 구현을 제공할 수 있습니다.
 
-에러코드는(`ErrorCode`) 리소스나 기능 단위로 분류되며, 그 안에서 오류 상황을 명시하면서도 분류하기 편리하게 합니다.  
-커스텀 예외는(`CustomException`) 런타임예외로 생성되며, 에러코드를 핸들링합니다.  
+## Interface Error Code
+
+에러코드는(`ErrorCode`) 리소스나 기능 단위로 분류할 수 있습니다.  
+커스텀 예외는(`CustomException`) 런타임 예외로 생성되며, 에러코드를 핸들링합니다.
+
+|            Class             | Description                                                                  |
+|:----------------------------:|:-----------------------------------------------------------------------------|
+|        (I) Error Code        | 모든 에러 코드의 상위 타입입니다. **_<ins>여러 `enum` 에러 코드에 구현하여 확장성 있는 구조를 제공합니다.</ins>_** |
+|     (C) Custom Exception     | 모든 커스텀 예외들의 상위 타입 역할을 합니다.                                                   |
+
+**Example**
+
+```mermaid
+---
+config:
+  theme: 'forest'
+---
+classDiagram
+class ErrorCode {
+    <<interface>>
+    +message() String
+    +httpStatus() HttpStatus
+    +exception() RuntimeException
+    +exception(Throwable) RuntimeException
+    +exception(Runnable) RuntimeException
+    +exception(Runnable, Throwable) RuntimeException
+    +exception(Supplier&lt;Map&lt;...>>) RuntimeException
+    +exception(Supplier&lt;Map&lt;...>>, Throwable) RuntimeException
+}
+
+class CustomException {
+    -errorCode: ErrorCode
+    -action: Runnable
+    -payloadSupplier: Supplier&lt;Map&lt;...>>
+    
+    +getErrorCode() ErrorCode
+    +executeOnError() void
+    +getPayload() Map&lt;...>
+    +getPayloadOrElse(Map&lt;...>) Map&lt;...>
+    +getPayloadOrElseGet(Supplier&lt;Map&lt;...>>) Map&lt;...>
+}
+
+class BoardErrorCode {
+    <<enumeration>>
+}
+class SignUpErrorCode {
+    <<enumeration>>
+}
+class LoginErrorCode {
+    <<enumeration>>
+}
+
+ErrorCode <|.. BoardErrorCode
+ErrorCode <|.. SignUpErrorCode
+ErrorCode <|.. LoginErrorCode
+CustomException ..> ErrorCode : uses
+```
+
+## Global Exception Handler
+
 글로벌 익셉션 핸들러는(`GlobalExceptionHandler`) 커스텀 예외와 에러코드를 한 곳에서 처리하도록 돕습니다.
 
 |            Class             | Description                                    |
 |:----------------------------:|:-----------------------------------------------|
-|        (I) Error Code        | 이 에러 코드는 `enum`으로 작성된 다른 에러 코드의 상위 타입입니다.      |
-|     (C) Custom Exception     | 모든 커스텀 예외들의 상위 타입 역할을 합니다.                     |
 | (C) Global Exception Handler | 커스텀 예외가 사전에 처리되지 않으면 이곳으로 전달됩니다. 예외 응답을 전달합니다. |
+|    (R) API Error Response    | API 예외 응답 바디 스펙입니다. 자바 `record`로 작성됩니다.        |
 
 - `interface ErrorCode`: `ErrorCode`는 각 `enum` 클래스에 구현될 수 있습니다.
     ```java
