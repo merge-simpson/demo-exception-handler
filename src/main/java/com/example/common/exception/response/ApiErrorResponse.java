@@ -34,14 +34,6 @@ public record ApiErrorResponse(
         @JsonInclude(Include.NON_NULL) String path,
         @JsonInclude(Include.NON_EMPTY) Map<String, Object> payload
 ) {
-    public static ApiErrorResponse of(CustomException exception, String path) {
-        return of(exception, path, null);
-    }
-
-    public static ApiErrorResponse of(CustomException exception) {
-        return of(exception, null, null);
-    }
-
     public static ApiErrorResponse of(CustomException exception, String path, Map<String, Object> payload) {
         var errorCode = exception.getErrorCode();
         var errorName = exception.getClass().getName();
