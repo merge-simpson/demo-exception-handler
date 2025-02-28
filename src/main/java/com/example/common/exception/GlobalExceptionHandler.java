@@ -22,11 +22,19 @@ public final class GlobalExceptionHandler {
      *  더 구체적인 예외를 핸들링하는 메서드가 없다면 이곳에서 핸들링한다.
      */
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ApiResponseError> handleMemberException(CustomException exception) {
-        ApiResponseError response = ApiResponseError.of(exception);
+    public ResponseEntity<ApiResponseError> handleCustomException(
+            CustomException exception,
+            HttpServletRequest request
+    ) {
+        String path = request.getRequestURI();
         HttpStatus httpStatus = exception
                 .getErrorCode()
                 .defaultHttpStatus();
+
+        exception.executeOnError();
+        var payload = exception.getPayload();
+
+        ApiResponseError response = ApiResponseError.of(exception, path, payload);
 
         return ResponseEntity
                 .status(httpStatus)
