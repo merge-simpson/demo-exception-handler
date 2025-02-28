@@ -9,6 +9,7 @@ import lombok.Builder;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -19,6 +20,8 @@ import java.util.List;
  * @param error HTTP 상태 코드 이름
  * @param cause
  * @param timestamp 발생 시각
+ * @param path 오류가 발생한 경로
+ * @param payload extension members
  */
 @Builder
 public record ApiResponseError(
@@ -29,9 +32,18 @@ public record ApiResponseError(
         String error,
         @JsonInclude(Include.NON_EMPTY) List<ApiSimpleError> cause,
         Instant timestamp,
-        @JsonInclude(Include.NON_NULL) String path
+        @JsonInclude(Include.NON_NULL) String path,
+        @JsonInclude(Include.NON_EMPTY) Map<String, Object> payload
 ) {
     public static ApiResponseError of(CustomException exception, String path) {
+        return of(exception, path, null);
+    }
+
+    public static ApiResponseError of(CustomException exception) {
+        return of(exception, null, null);
+    }
+
+    public static ApiResponseError of(CustomException exception, String path, Map<String, Object> payload) {
         ErrorCode errorCode = exception.getErrorCode();
         String errorName = exception.getClass().getName();
         errorName = errorName.substring(errorName.lastIndexOf('.') + 1);
@@ -47,11 +59,8 @@ public record ApiResponseError(
                 .error(error)
                 .cause(ApiSimpleError.listOfCauseSimpleError(exception))
                 .path(path)
+                .payload(payload)
                 .build();
-    }
-
-    public static ApiResponseError of(CustomException exception) {
-        return of(exception, null);
     }
 
     public ApiResponseError {
@@ -73,6 +82,14 @@ public record ApiResponseError(
 
         if (timestamp == null) {
             timestamp = Instant.now();
+        }
+
+        if (path == null) {
+            path = "about:blank";
+        }
+
+        if (payload != null && payload.isEmpty()) {
+            payload = null;
         }
     }
 }
