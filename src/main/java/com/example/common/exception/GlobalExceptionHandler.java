@@ -2,7 +2,7 @@ package com.example.common.exception;
 
 import com.example.common.exception.status2xx.NoContentException;
 import com.example.common.exception.support.CustomException;
-import com.example.common.exception.response.ApiResponseError;
+import com.example.common.exception.response.ApiErrorResponse;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ public final class GlobalExceptionHandler {
      *  더 구체적인 예외를 핸들링하는 메서드가 없다면 이곳에서 핸들링한다.
      */
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ApiResponseError> handleCustomException(
+    public ResponseEntity<ApiErrorResponse> handleCustomException(
             CustomException exception,
             HttpServletRequest request
     ) {
@@ -34,7 +34,7 @@ public final class GlobalExceptionHandler {
         exception.executeOnError();
         var payload = exception.getPayload();
 
-        ApiResponseError response = ApiResponseError.of(exception, path, payload);
+        ApiErrorResponse response = ApiErrorResponse.of(exception, path, payload);
 
         return ResponseEntity
                 .status(httpStatus)

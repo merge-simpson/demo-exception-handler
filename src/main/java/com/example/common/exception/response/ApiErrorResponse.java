@@ -24,7 +24,7 @@ import java.util.Map;
  * @param payload extension members
  */
 @Builder
-public record ApiResponseError(
+public record ApiErrorResponse(
         String code,
         Integer status,
         String name,
@@ -35,15 +35,15 @@ public record ApiResponseError(
         @JsonInclude(Include.NON_NULL) String path,
         @JsonInclude(Include.NON_EMPTY) Map<String, Object> payload
 ) {
-    public static ApiResponseError of(CustomException exception, String path) {
+    public static ApiErrorResponse of(CustomException exception, String path) {
         return of(exception, path, null);
     }
 
-    public static ApiResponseError of(CustomException exception) {
+    public static ApiErrorResponse of(CustomException exception) {
         return of(exception, null, null);
     }
 
-    public static ApiResponseError of(CustomException exception, String path, Map<String, Object> payload) {
+    public static ApiErrorResponse of(CustomException exception, String path, Map<String, Object> payload) {
         ErrorCode errorCode = exception.getErrorCode();
         String errorName = exception.getClass().getName();
         errorName = errorName.substring(errorName.lastIndexOf('.') + 1);
@@ -51,7 +51,7 @@ public record ApiResponseError(
                 errorCode.defaultHttpStatus().name()
         );
 
-        return ApiResponseError.builder()
+        return ApiErrorResponse.builder()
                 .code(errorCode.name())
                 .status(errorCode.defaultHttpStatus().value())
                 .name(errorName)
@@ -63,7 +63,7 @@ public record ApiResponseError(
                 .build();
     }
 
-    public ApiResponseError {
+    public ApiErrorResponse {
         if (code == null) {
             code = "API_ERROR";
         }
