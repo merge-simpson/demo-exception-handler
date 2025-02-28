@@ -6,7 +6,7 @@
 
 # Prerequisites
 
-- **Syntax Level**: above JDK 17 if using preview or above 20
+- **Syntax Level**: above JDK 21 (incl. preview)
 - **Docker Compose** (Now pure docker supplies docker compose as well)
 
 # Features
