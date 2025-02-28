@@ -136,6 +136,26 @@ public class CustomException extends RuntimeException {
             public CustomException defaultException(Throwable cause) {
                 return new CustomException(this, cause);
             }
+
+            @Override
+            public RuntimeException defaultException(Runnable onError) {
+                return new CustomException(this, onError);
+            }
+
+            @Override
+            public RuntimeException defaultException(Runnable onError, Throwable cause) {
+                return new CustomException(this, onError, cause);
+            }
+
+            @Override
+            public RuntimeException defaultException(Supplier<Map<String, Object>> payloadSupplier) {
+                return new CustomException(this, payloadSupplier);
+            }
+
+            @Override
+            public RuntimeException defaultException(Supplier<Map<String, Object>> payloadSupplier, Throwable cause) {
+                return new CustomException(this, payloadSupplier, cause);
+            }
         };
     }
 }

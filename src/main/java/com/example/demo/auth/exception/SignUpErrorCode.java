@@ -1,8 +1,12 @@
 package com.example.demo.auth.exception;
 
+import com.example.common.exception.support.CustomException;
 import com.example.common.exception.support.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+
+import java.util.Map;
+import java.util.function.Supplier;
 
 @RequiredArgsConstructor
 public enum SignUpErrorCode implements ErrorCode {
@@ -37,4 +41,26 @@ public enum SignUpErrorCode implements ErrorCode {
     public SignUpException defaultException(Throwable cause) {
         return new SignUpException(this, cause);
     }
+
+    @Override
+    public RuntimeException defaultException(Runnable onError) {
+        return new SignUpException(this, onError);
+    }
+
+    @Override
+    public RuntimeException defaultException(Runnable onError, Throwable cause) {
+        return new SignUpException(this, onError, cause);
+    }
+
+    @Override
+    public RuntimeException defaultException(Supplier<Map<String, Object>> payloadSupplier) {
+        return new SignUpException(this, payloadSupplier);
+    }
+
+    @Override
+    public RuntimeException defaultException(Supplier<Map<String, Object>> payloadSupplier, Throwable cause) {
+        return new CustomException(this, payloadSupplier, cause);
+    }
+
+
 }
