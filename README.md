@@ -170,14 +170,14 @@ public enum SignUpErrorCode implements ErrorCode {
 
 ```shell
 # 터미널을 열고 프로젝트 루트 경로에서 실행합니다.
-docker-compose up -d 
+docker compose up -d 
 ```
 
 <details>
   <summary>내리기</summary>
 
   ```shell
-  docker-compose down
+  docker compose down
   ```
 
 </details>
@@ -186,7 +186,7 @@ docker-compose up -d
   <summary>내리기 (보존한 데이터도 삭제하기)</summary>
 
   ```shell
-  docker-compose down -v
+  docker compose down -v
   ```
 
 </details>
