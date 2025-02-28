@@ -48,12 +48,12 @@ public record ApiErrorResponse(
         String errorName = exception.getClass().getName();
         errorName = errorName.substring(errorName.lastIndexOf('.') + 1);
         String error = TextCaseUtil.capitalizeAndSaveUpperSnakeCase(
-                errorCode.defaultHttpStatus().name()
+                errorCode.httpStatus().name()
         );
 
         return ApiErrorResponse.builder()
                 .code(errorCode.name())
-                .status(errorCode.defaultHttpStatus().value())
+                .status(errorCode.httpStatus().value())
                 .name(errorName)
                 .message(exception.getMessage())
                 .error(error)

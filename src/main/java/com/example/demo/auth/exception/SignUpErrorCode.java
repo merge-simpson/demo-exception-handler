@@ -23,42 +23,42 @@ public enum SignUpErrorCode implements ErrorCode {
     private final HttpStatus status;
 
     @Override
-    public String defaultMessage() {
+    public String message() {
         return message;
     }
 
     @Override
-    public HttpStatus defaultHttpStatus() {
+    public HttpStatus httpStatus() {
         return status;
     }
 
     @Override
-    public SignUpException defaultException() {
+    public SignUpException exception() {
         return new SignUpException(this);
     }
 
     @Override
-    public SignUpException defaultException(Throwable cause) {
+    public SignUpException exception(Throwable cause) {
         return new SignUpException(this, cause);
     }
 
     @Override
-    public RuntimeException defaultException(Runnable onError) {
+    public RuntimeException exception(Runnable onError) {
         return new SignUpException(this, onError);
     }
 
     @Override
-    public RuntimeException defaultException(Runnable onError, Throwable cause) {
+    public RuntimeException exception(Runnable onError, Throwable cause) {
         return new SignUpException(this, onError, cause);
     }
 
     @Override
-    public RuntimeException defaultException(Supplier<Map<String, Object>> payloadSupplier) {
+    public RuntimeException exception(Supplier<Map<String, Object>> payloadSupplier) {
         return new SignUpException(this, payloadSupplier);
     }
 
     @Override
-    public RuntimeException defaultException(Supplier<Map<String, Object>> payloadSupplier, Throwable cause) {
+    public RuntimeException exception(Supplier<Map<String, Object>> payloadSupplier, Throwable cause) {
         return new CustomException(this, payloadSupplier, cause);
     }
 

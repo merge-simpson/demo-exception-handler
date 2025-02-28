@@ -29,7 +29,7 @@ public final class GlobalExceptionHandler {
         String path = request.getRequestURI();
         HttpStatus httpStatus = exception
                 .getErrorCode()
-                .defaultHttpStatus();
+                .httpStatus();
 
         exception.executeOnError();
         var payload = exception.getPayload();

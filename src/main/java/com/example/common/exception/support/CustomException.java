@@ -14,7 +14,7 @@ public class CustomException extends RuntimeException {
     protected final Supplier<Map<String, Object>> payloadSupplier;
 
     public CustomException() {
-        super(getDefaultErrorCode().defaultMessage());
+        super(getDefaultErrorCode().message());
         this.errorCode = getDefaultErrorCode();
         this.onError = () -> {};
         this.payloadSupplier = Collections::emptyMap;
@@ -35,42 +35,42 @@ public class CustomException extends RuntimeException {
     }
 
     public CustomException(ErrorCode errorCode) {
-        super(errorCode.defaultMessage());
+        super(errorCode.message());
         this.errorCode = errorCode;
         this.onError = () -> {};
         this.payloadSupplier = Collections::emptyMap;
     }
 
     public CustomException(ErrorCode errorCode, Throwable cause) {
-        super(errorCode.defaultMessage(), cause);
+        super(errorCode.message(), cause);
         this.errorCode = errorCode;
         this.onError = () -> {};
         this.payloadSupplier = Collections::emptyMap;
     }
 
     public CustomException(ErrorCode errorCode, Runnable onError) {
-        super(errorCode.defaultMessage());
+        super(errorCode.message());
         this.errorCode = errorCode;
         this.onError = onError;
         this.payloadSupplier = Collections::emptyMap;
     }
 
     public CustomException(ErrorCode errorCode, Runnable onError, Throwable cause) {
-        super(errorCode.defaultMessage(), cause);
+        super(errorCode.message(), cause);
         this.errorCode = errorCode;
         this.onError = onError;
         this.payloadSupplier = Collections::emptyMap;
     }
 
     public CustomException(ErrorCode errorCode, Supplier<Map<String, Object>> payloadSupplier) {
-        super(errorCode.defaultMessage());
+        super(errorCode.message());
         this.errorCode = errorCode;
         this.onError = () -> {};
         this.payloadSupplier = payloadSupplier;
     }
 
     public CustomException(ErrorCode errorCode, Supplier<Map<String, Object>> payloadSupplier, Throwable cause) {
-        super(errorCode.defaultMessage(), cause);
+        super(errorCode.message(), cause);
         this.errorCode = errorCode;
         this.onError = () -> {};
         this.payloadSupplier = payloadSupplier;
@@ -118,42 +118,42 @@ public class CustomException extends RuntimeException {
             }
 
             @Override
-            public HttpStatus defaultHttpStatus() {
+            public HttpStatus httpStatus() {
                 return HttpStatus.INTERNAL_SERVER_ERROR;
             }
 
             @Override
-            public String defaultMessage() {
+            public String message() {
                 return "서버 오류";
             }
 
             @Override
-            public CustomException defaultException() {
+            public CustomException exception() {
                 return new CustomException(this);
             }
 
             @Override
-            public CustomException defaultException(Throwable cause) {
+            public CustomException exception(Throwable cause) {
                 return new CustomException(this, cause);
             }
 
             @Override
-            public RuntimeException defaultException(Runnable onError) {
+            public RuntimeException exception(Runnable onError) {
                 return new CustomException(this, onError);
             }
 
             @Override
-            public RuntimeException defaultException(Runnable onError, Throwable cause) {
+            public RuntimeException exception(Runnable onError, Throwable cause) {
                 return new CustomException(this, onError, cause);
             }
 
             @Override
-            public RuntimeException defaultException(Supplier<Map<String, Object>> payloadSupplier) {
+            public RuntimeException exception(Supplier<Map<String, Object>> payloadSupplier) {
                 return new CustomException(this, payloadSupplier);
             }
 
             @Override
-            public RuntimeException defaultException(Supplier<Map<String, Object>> payloadSupplier, Throwable cause) {
+            public RuntimeException exception(Supplier<Map<String, Object>> payloadSupplier, Throwable cause) {
                 return new CustomException(this, payloadSupplier, cause);
             }
         };
