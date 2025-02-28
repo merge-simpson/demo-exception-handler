@@ -11,8 +11,8 @@ public interface ErrorCode {
     HttpStatus httpStatus();
     RuntimeException exception();
     RuntimeException exception(Throwable cause);
-    RuntimeException exception(Runnable onError);
-    RuntimeException exception(Runnable onError, Throwable cause);
+    RuntimeException exception(Runnable action);
+    RuntimeException exception(Runnable action, Throwable cause);
     RuntimeException exception(Supplier<Map<String, Object>> payloadSupplier);
     RuntimeException exception(Supplier<Map<String, Object>> payloadSupplier, Throwable cause);
 }

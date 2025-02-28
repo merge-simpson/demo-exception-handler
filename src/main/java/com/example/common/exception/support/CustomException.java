@@ -10,69 +10,69 @@ import java.util.function.Supplier;
 public class CustomException extends RuntimeException {
 
     protected final ErrorCode errorCode;
-    protected final Runnable onError;
+    protected final Runnable action;
     protected final Supplier<Map<String, Object>> payloadSupplier;
 
     public CustomException() {
         super(getDefaultErrorCode().message());
         this.errorCode = getDefaultErrorCode();
-        this.onError = () -> {};
+        this.action = () -> {};
         this.payloadSupplier = Collections::emptyMap;
     }
 
     public CustomException(String message) {
         super(message);
         this.errorCode = getDefaultErrorCode();
-        this.onError = () -> {};
+        this.action = () -> {};
         this.payloadSupplier = Collections::emptyMap;
     }
 
     public CustomException(String message, Throwable cause) {
         super(message, cause);
         this.errorCode = getDefaultErrorCode();
-        this.onError = () -> {};
+        this.action = () -> {};
         this.payloadSupplier = Collections::emptyMap;
     }
 
     public CustomException(ErrorCode errorCode) {
         super(errorCode.message());
         this.errorCode = errorCode;
-        this.onError = () -> {};
+        this.action = () -> {};
         this.payloadSupplier = Collections::emptyMap;
     }
 
     public CustomException(ErrorCode errorCode, Throwable cause) {
         super(errorCode.message(), cause);
         this.errorCode = errorCode;
-        this.onError = () -> {};
+        this.action = () -> {};
         this.payloadSupplier = Collections::emptyMap;
     }
 
-    public CustomException(ErrorCode errorCode, Runnable onError) {
+    public CustomException(ErrorCode errorCode, Runnable action) {
         super(errorCode.message());
         this.errorCode = errorCode;
-        this.onError = onError;
+        this.action = action;
         this.payloadSupplier = Collections::emptyMap;
     }
 
-    public CustomException(ErrorCode errorCode, Runnable onError, Throwable cause) {
+    public CustomException(ErrorCode errorCode, Runnable action, Throwable cause) {
         super(errorCode.message(), cause);
         this.errorCode = errorCode;
-        this.onError = onError;
+        this.action = action;
         this.payloadSupplier = Collections::emptyMap;
     }
 
     public CustomException(ErrorCode errorCode, Supplier<Map<String, Object>> payloadSupplier) {
         super(errorCode.message());
         this.errorCode = errorCode;
-        this.onError = () -> {};
+        this.action = () -> {};
         this.payloadSupplier = payloadSupplier;
     }
 
     public CustomException(ErrorCode errorCode, Supplier<Map<String, Object>> payloadSupplier, Throwable cause) {
         super(errorCode.message(), cause);
         this.errorCode = errorCode;
-        this.onError = () -> {};
+        this.action = () -> {};
         this.payloadSupplier = payloadSupplier;
     }
 
@@ -85,7 +85,7 @@ public class CustomException extends RuntimeException {
     }
 
     public void executeOnError() {
-        onError.run();
+        action.run();
     }
 
     public Map<String, Object> getPayload() {
@@ -138,13 +138,13 @@ public class CustomException extends RuntimeException {
             }
 
             @Override
-            public RuntimeException exception(Runnable onError) {
-                return new CustomException(this, onError);
+            public RuntimeException exception(Runnable action) {
+                return new CustomException(this, action);
             }
 
             @Override
-            public RuntimeException exception(Runnable onError, Throwable cause) {
-                return new CustomException(this, onError, cause);
+            public RuntimeException exception(Runnable action, Throwable cause) {
+                return new CustomException(this, action, cause);
             }
 
             @Override

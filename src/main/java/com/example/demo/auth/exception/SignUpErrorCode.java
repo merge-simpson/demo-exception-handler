@@ -43,13 +43,13 @@ public enum SignUpErrorCode implements ErrorCode {
     }
 
     @Override
-    public RuntimeException exception(Runnable onError) {
-        return new SignUpException(this, onError);
+    public RuntimeException exception(Runnable action) {
+        return new SignUpException(this, action);
     }
 
     @Override
-    public RuntimeException exception(Runnable onError, Throwable cause) {
-        return new SignUpException(this, onError, cause);
+    public RuntimeException exception(Runnable action, Throwable cause) {
+        return new SignUpException(this, action, cause);
     }
 
     @Override
