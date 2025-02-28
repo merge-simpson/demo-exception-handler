@@ -105,16 +105,20 @@ docker-compose up -d
 
 <details>
   <summary>내리기</summary>
+
   ```shell
   docker-compose down
   ```
+
 </details>
 
 <details>
   <summary>내리기 (보존한 데이터도 삭제하기)</summary>
+
   ```shell
   docker-compose down -v
   ```
+
 </details>
 
 로컬 DB 접속 정보 (제공된 도커 컴포즈 파일로 설치한 데이터베이스)
