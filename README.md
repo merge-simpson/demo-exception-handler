@@ -6,8 +6,9 @@
 
 # Prerequisites
 
-- Syntax Version: JDK 17 (Preview)
-- Docker Compose (Download: [Docker Desktop](https://www.docker.com/products/docker-desktop/))
+- **Syntax Level**: above JDK 17 if using preview or above 20
+- **Docker Compose** (Now pure docker supplies docker compose as well)
+
 # Features
 
 **확장성 있는 에러코드 설계를 제공합니다.**  
@@ -80,22 +81,12 @@ CustomException ..> ErrorCode : uses
 | (C) Global Exception Handler | 커스텀 예외가 사전에 처리되지 않으면 이곳으로 전달됩니다. 예외 응답을 전달합니다. |
 |    (R) API Error Response    | API 예외 응답 바디 스펙입니다. 자바 `record`로 작성됩니다.        |
 
-- `interface ErrorCode`: `ErrorCode`는 각 `enum` 클래스에 구현될 수 있습니다.
-    ```java
-    // 에러 코드를 리소스나 기능 단위로 분류할 수 있습니다.
-    public enum SignUpErrorCode implements ErrorCode {/* ... */}
-    ```
-- `CustomException` 클래스는 `ErrorCode`를 핸들링합니다.
-- `CustomException` 클래스는 `GlobalExceptionHandler`에서 취급합니다.
-  - 다양하게 분류된 `ErrorCode`와 `CustomException`을 한 곳에서 처리할 수 있습니다.
-  - 세부적인 커스텀 예외나 각 에러 코드를 처리하기 위한 추가적인 코드는 필요하지 않습니다.
-
 # Use Case
 
-- `ErrorCode`를 구현하는 `enum` 클래스를 추가하고, 이곳에 예외 상황을 열거 상수로 간편하게 작성합니다.
-- (선택적) 원한다면 `CustomException` 클래스를 상속받는 예외 클래스를 추가할 수 있습니다.
-  이것은 보통 리소스나 기능 단위로 생성하는 것이 좋고, 예외 상황은 `ErrorCode`를 사용하여 분류합니다.
-- `GlobalExceptionHandler`에서 `CustomException` 및 그 자손 클래스를 모두 캐치할 수 있습니다.
+- `ErrorCode`를 구현하는 `enum` 클래스에서 예외 상황을 간편하게 나열합니다.
+- (선택 사항) 원한다면 `CustomException` 클래스를 상속받는 예외 클래스를 추가할 수 있습니다.
+  이것은 보통 리소스나 기능 단위로 생성하면 충분하고, 그보다 구체적인 예외 상황을 `ErrorCode` 구현부를 사용하여 분류합니다.
+- `GlobalExceptionHandler`에서 `CustomException` 및 그 자손 클래스를 모두 취급할 수 있습니다.
 
 ```java
 public enum SignUpErrorCode implements ErrorCode {
